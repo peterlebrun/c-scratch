@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <errno.h>
 #include <stdlib.h>
-#include <inttypes.h>
 
 void die(const char *message) {
   if (errno) {
@@ -54,10 +53,9 @@ int get_nth_fibonacci(int n) {
 }
 
 int main(int argc, char *argv[]) {
-  //if (argc != 2) die("Incorrect number of arguments. Use: fibonacci int");
+  if (argc != 2) die("Incorrect number of arguments. Use: fibonacci int");
 
-  char* endptr;
-  int fib_count = strtoimax(argv[1], &endptr, 10);
+  int fib_count = atoi(argv[1]);
 
   if (fib_count < 1) die("Argument must be greater than 0");
 

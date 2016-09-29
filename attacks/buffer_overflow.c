@@ -8,7 +8,7 @@
  * problems where it either won't compile, or you're getting abort traps,
  * you'll need to compile like so:
  *
- * gcc buffer_overflow.c -fno-stack-protector -D_FORTIFY_SOURCE=0 -o buffer_overflow.c
+ * gcc buffer_overflow.c -fno-stack-protector -D_FORTIFY_SOURCE=0 -o buffer_overflow
  *
  * -fno-stack-protector tells gcc to compile even though you're using a dangerous
  * command (strcpy as opposed to strncopy)
@@ -27,12 +27,17 @@ int main(int argc, char **argv) {
   int foo = 0;
   char buf[1];
 
-  printf("%p\n", &buf);
-  printf("%p\n", &foo);
+  printf("Initialized Values:\n");
+  printf("buf: %s\t%p\n", buf, &buf);
+  printf("foo: %d\t%p\n", foo, &foo);
 
   // This will write the value 1 into the variable "foo" because
   // we aren't validating anything, checking boundaries, etc
   strcpy(buf, "a1");
+
+  printf("\nRemember, all we did was set buf to \"a1\"\n");
+  printf("buf: %s\t%p\n", buf, &buf);
+  printf("foo: %d\t%p\n", foo, &foo);
 
   if (foo) { // we never assigned any value to foo except 0
     // Imagine if this was a super sensitive critical path
